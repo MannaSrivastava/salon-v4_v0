@@ -29,7 +29,7 @@ const SHOP = {
   ],
 
   social: {
-    whatsapp:  "https://wa.me/919876543210",
+    whatsapp:  "https://wa.me/919162777063",
     instagram: "https://instagram.com/glamourstudio",
     facebook:  "https://facebook.com/glamourstudio",
     youtube:   "",
