@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Premium unisex salon — Men, Women, Kids & Special Occasions. Book via WhatsApp.">
+  <meta name="theme-color" content="#6b1e3b">
+  <meta property="og:title" content="Glamour Studio — Unisex Salon">
+  <meta property="og:description" content="Book your salon appointment instantly via WhatsApp.">
+  <meta property="og:type" content="website">
+  <title>Glamour Studio — Unisex Salon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="config/features.js"></script>
+  <script src="config/shop.js"></script>
+  <script src="config/services.js"></script>
+  <script src="config/creator.js"></script>
+</head>
+<body>
+
+<div id="loader" aria-hidden="true">
+  <div class="loader-inner"><div class="loader-spinner"></div><p>Loading…</p></div>
+</div>
+
+<div id="announcement-bar" style="display:none">
+  <span id="announcement-text"></span>
+  <button onclick="this.parentElement.style.display='none'" aria-label="Close">✕</button>
+</div>
+
+<header id="hero">
+  <div class="hero-inner" id="hero-inner"></div>
+  <div class="hero-divider"></div>
+</header>
+
+<nav id="cat-nav" aria-label="Service Categories">
+  <div class="cat-nav-inner" id="cat-nav-inner"></div>
+</nav>
+
+<!-- ═══ STEP 1 — BROWSE SERVICES  [warm cream] ════════════ -->
+<section id="sec-services" class="page-sec sec-services-bg">
+  <div class="sec-inner">
+    <div class="sec-eyebrow eyebrow-services">
+      <span class="eyebrow-num">01</span>
+      <span>Browse &amp; Select Services</span>
+    </div>
+    <div class="sec-heading">
+      <h2>Our Services</h2>
+      <p>Tap any service card to add it to your booking</p>
+    </div>
+    <div id="services-container"></div>
+  </div>
+</section>
+
+<!-- bridge -->
+<div class="sec-bridge bridge-to-dark">
+  <svg class="bridge-svg" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="var(--ac)"/><path d="M20 10v20M12 22l8 8 8-8" stroke="var(--pr3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Your selections appear below</span>
+</div>
+
+<!-- ═══ STEP 2 — BOOKING SUMMARY  [deep dark] ════════════ -->
+<section id="sec-cart" class="page-sec sec-cart-bg">
+  <div class="sec-inner">
+    <div class="sec-eyebrow eyebrow-cart">
+      <span class="eyebrow-num">02</span>
+      <span>Your Booking Summary</span>
+    </div>
+
+    <!-- Empty -->
+    <div id="cart-empty" class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <h3>Nothing selected yet</h3>
+      <p>Go to Step 1 and tap a service — it appears here with date &amp; time pickers</p>
+    </div>
+
+    <!-- Filled -->
+    <div id="cart-filled" style="display:none">
+      <!-- Common slot toggle -->
+      <div id="common-slot-bar" class="common-slot-bar" style="display:none">
+        <div class="cs-toggle-row">
+          <label class="hs-toggle">
+            <input type="checkbox" id="common-slot-chk" onchange="toggleCommonSlot(this.checked)">
+            <span class="hs-track"></span>
+          </label>
+          <div>
+            <span class="cs-label">Apply same date &amp; time to all services</span>
+            <span class="cs-sub">Handy when all services are in one visit</span>
+          </div>
+        </div>
+        <div id="common-slot-fields" class="common-slot-fields" style="display:none">
+          <div class="cd-group">
+            <label>📅 Date for all</label>
+            <input type="date" id="common-date" onchange="applyCommonSlot()">
+          </div>
+          <div class="cd-group">
+            <label>🕐 Time for all</label>
+            <select id="common-time" onchange="applyCommonSlot()">
+              <option value="">— pick time —</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-header-row">
+        <h3 class="cart-title">Selected Services <span id="cart-count" class="cart-count-badge">0</span></h3>
+        <p class="cart-subtitle">Set your date &amp; time for each service</p>
+      </div>
+      <div id="cart-list" class="cart-list"></div>
+      <div class="cart-footer-bar">
+        <div>
+          <div class="cart-total-label">Estimated Total</div>
+          <div class="cart-total-note" id="cart-total-note"></div>
+        </div>
+        <div class="cart-total-amount" id="cart-total-amount">₹0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- bridge -->
+<div class="sec-bridge bridge-to-light">
+  <svg class="bridge-svg" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="var(--ac)"/><path d="M20 10v20M12 22l8 8 8-8" stroke="var(--pr3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Add your details &amp; confirm</span>
+</div>
+
+<!-- ═══ STEP 3 — CONFIRM & BOOK  [fresh light] ════════════ -->
+<section id="sec-booking" class="page-sec sec-booking-bg">
+  <div class="sec-inner" style="max-width:680px">
+    <div class="sec-eyebrow eyebrow-booking">
+      <span class="eyebrow-num">03</span>
+      <span>Confirm &amp; Book</span>
+    </div>
+    <div class="booking-card">
+      <div class="booking-card-head">
+        <div class="booking-head-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.47 6.47 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.523 5.845L.057 23.428l5.756-1.508A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.018-1.38l-.36-.214-3.717.975.993-3.63-.235-.374A9.817 9.817 0 012.182 12C2.182 6.584 6.584 2.182 12 2.182S21.818 6.584 21.818 12 17.416 21.818 12 21.818z"/></svg>
+        </div>
+        <div>
+          <h2>Book Your Appointment</h2>
+          <p>Your details · Confirm · WhatsApp + email receipt</p>
+        </div>
+      </div>
+      <div class="booking-card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>👤 Your Name *</label>
+            <input type="text" id="f-name" placeholder="Your full name" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label>📱 Mobile Number *</label>
+            <input type="tel" id="f-phone" placeholder="+91 98765 43210" autocomplete="tel">
+          </div>
+        </div>
+        <!-- Customer email — feature flagged -->
+        <div id="email-field-wrap" class="form-group" style="display:none">
+          <label>✉️ Email <span class="label-opt">(optional — for booking confirmation)</span></label>
+          <input type="email" id="f-email" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <!-- Special requests — feature flagged -->
+        <div id="special-field-wrap" class="form-group" style="display:none">
+          <label>💬 Special Requests <span class="label-opt">(optional)</span></label>
+          <textarea id="f-special" rows="2" placeholder="e.g. prefer female stylist, no ammonia dye, mobility needs, occasion details…"></textarea>
+        </div>
+        <p class="form-note" id="form-note-text"></p>
+        <button class="book-btn" id="book-btn" onclick="openConfirmModal()">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.47 6.47 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.523 5.845L.057 23.428l5.756-1.508A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.018-1.38l-.36-.214-3.717.975.993-3.63-.235-.374A9.817 9.817 0 012.182 12C2.182 6.584 6.584 2.182 12 2.182S21.818 6.584 21.818 12 17.416 21.818 12 21.818z"/></svg>
+          Book via WhatsApp
+        </button>
+        <p class="book-sub-note" id="book-sub-note" style="display:none"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AI CONTENT STUDIO ═════════════════════════════════ -->
+<section id="sec-ai" class="page-sec sec-ai-bg" style="display:none">
+  <div class="sec-inner" style="max-width:820px">
+    <div class="sec-heading">
+      <h2>✨ AI Content Studio</h2>
+      <p>Generate ready-to-post social media content in seconds — completely free</p>
+    </div>
+    <div class="ai-card">
+      <!-- Controls -->
+      <div class="ai-controls-wrap">
+        <div class="ai-controls-grid">
+          <div class="form-group">
+            <label>📱 Platform</label>
+            <select id="ai-platform">
+              <option value="instagram">Instagram Feed Post</option>
+              <option value="instagram_reels">Instagram Reels Caption</option>
+              <option value="instagram_story">Instagram Story</option>
+              <option value="facebook">Facebook Post</option>
+              <option value="whatsapp">WhatsApp Status / Broadcast</option>
+              <option value="youtube">YouTube Short / Video Description</option>
+              <option value="any">All Platforms (general)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>🎯 Content Type</label>
+            <select id="ai-type">
+              <option value="offer">🏷️ Special Offer / Discount</option>
+              <option value="service">✨ Service Spotlight</option>
+              <option value="bridal">💍 Bridal / Wedding Season</option>
+              <option value="festival">🪔 Festival / Seasonal</option>
+              <option value="tip">💡 Hair &amp; Beauty Tip</option>
+              <option value="review">⭐ Customer Review Feature</option>
+              <option value="home">🏠 Home Service Promo</option>
+              <option value="newservice">🆕 New Service Launch</option>
+              <option value="video_script">🎬 Video / Reels Script</option>
+              <option value="story_ideas">📖 Story Ideas (5 ideas)</option>
+              <option value="before_after">🔄 Before &amp; After</option>
+              <option value="team">👥 Team / Stylist Feature</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label>📝 Extra context <span class="label-opt">(optional — add details like offer %, service name, stylist name, occasion…)</span></label>
+            <input type="text" id="ai-details" placeholder="e.g. 30% off this Diwali weekend, new nail art service, our head stylist Priya…">
+          </div>
+          <div class="form-group">
+            <label>🌡️ Tone</label>
+            <select id="ai-tone">
+              <option value="warm">Warm &amp; Friendly</option>
+              <option value="professional">Professional &amp; Elegant</option>
+              <option value="exciting">Exciting &amp; Energetic</option>
+              <option value="minimal">Clean &amp; Minimal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>🗣️ Language</label>
+            <select id="ai-lang">
+              <option value="english">English</option>
+              <option value="hinglish">Hinglish (Hindi + English)</option>
+              <option value="hindi">Hindi</option>
+            </select>
+          </div>
+        </div>
+        <button class="ai-gen-btn" id="ai-gen-btn" onclick="generateContent()">
+          <span id="ai-btn-text">✨ Generate Content</span>
+        </button>
+        <div class="ai-mode-badge" id="ai-mode-badge"></div>
+      </div>
+
+      <!-- Loading -->
+      <div id="ai-loading" class="ai-loading" style="display:none">
+        <div class="ai-spinner"></div>
+        <p>Writing your content…</p>
+      </div>
+
+      <!-- Results -->
+      <div id="ai-results" class="ai-results" style="display:none">
+        <div class="ai-results-header">
+          <span>Click any card to copy · Tap ↺ to regenerate</span>
+          <button class="ai-regen-btn" onclick="generateContent()">↺ Regenerate</button>
+        </div>
+        <div id="ai-variants" class="ai-variants"></div>
+      </div>
+
+      <!-- Error -->
+      <div id="ai-error" class="ai-error" style="display:none"></div>
+
+      <div class="ai-footer-note">
+        <span id="ai-footer-mode">✅ Free template mode</span>
+        <span>·</span>
+        <span>Add a Claude API key in <code>config/features.js</code> for AI-enhanced captions</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="sec-gallery" class="page-sec sec-gallery-bg" style="display:none">
+  <div class="sec-inner">
+    <div class="sec-heading"><h2>Our Gallery</h2><p>A glimpse inside our world</p></div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- QR -->
+<section id="sec-qr" class="page-sec sec-qr-bg" style="display:none">
+  <div class="sec-heading"><h2>Share Our Salon</h2><p>Scan with any phone camera</p></div>
+  <div class="qr-card"><div id="qr-wrap"></div><p class="qr-label">📷 Scan to visit &amp; book</p><p class="qr-url" id="qr-url"></p></div>
+</section>
+
+<!-- LOCATION -->
+<section id="sec-location" class="page-sec sec-location-bg" style="display:none">
+  <div class="sec-inner">
+    <div class="sec-heading"><h2>Find Us</h2><p>Visit us or request a home service</p></div>
+    <div class="location-grid">
+      <div class="address-card"><h3>📍 Address &amp; Hours</h3><div id="address-content"></div></div>
+      <div class="map-wrap" id="map-wrap"></div>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer"><div id="footer-inner"></div></footer>
+
+<!-- CONFIRMATION MODAL -->
+<div id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-head"><h3>✅ Confirm Your Booking</h3><p>Review &amp; edit before sending</p></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<button id="scroll-top" aria-label="Back to top">↑</button>
+
+<script src="js/app.js"></script>
+</body>
+</html>
