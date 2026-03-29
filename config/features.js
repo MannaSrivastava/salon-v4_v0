@@ -20,7 +20,7 @@ const FEATURES = {
   // See README → "Google Apps Script Setup" for full guide
   bookingStorage:   true,
   // YOUR master sheet webhook URL (logs ALL salons into your one sheet)
-  sheetsWebhookUrl: "",     // Paste your Apps Script Web App URL here
+  sheetsWebhookUrl: "https://script.google.com/macros/s/AKfycbyuAKAbI3saCdh4ALOQzQF6fZLOEF8CXqRFc5XsUdedn43g-UAm0A4OQSARCnin30_L/exec",     // Paste your Apps Script Web App URL here
 
   // ── NOTIFICATIONS ──────────────────────────────────────
 
