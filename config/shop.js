@@ -7,8 +7,8 @@ const SHOP = {
   tagline: "Premium Unisex Salon — Look Good, Feel Great",
   logo:    "images/logo.png",       // "" for text-only hero
 
-  phone:    "+91 98765 43210",
-  whatsapp: "919876543210",          // digits only — no + or spaces
+  phone:    "+91 91627 77063",
+  whatsapp: "919162777063",          // digits only — no + or spaces
   email:    "hello@glamourstudio.in",
   website:  "https://glamourstudio.in",
 
